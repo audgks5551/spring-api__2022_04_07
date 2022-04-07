@@ -50,10 +50,10 @@ public class UserServiceImpl implements UserService {
 
         userEntity.setEmail(userEntity.getEmail().trim());
 
-        UserEntity findUser = userRepository.findByEmail(userEntity.getEmail())
+        UserEntity findUser =
+                userRepository.findByEmail(userEntity.getEmail())
                 .filter(u -> u.getPassword().equals(userEntity.getPassword()))
                 .orElse(null);
-
 
         if (findUser == null) {
             /**

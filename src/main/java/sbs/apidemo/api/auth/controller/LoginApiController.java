@@ -4,16 +4,18 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import sbs.apidemo.api.Response;
 import sbs.apidemo.api.auth.dto.UserDto;
-import sbs.apidemo.api.auth.vo.RequestUser;
+import sbs.apidemo.api.auth.vo.LoginUser;
 import sbs.apidemo.api.auth.vo.ResponseUser;
 import sbs.apidemo.service.UserService;
 import sbs.apidemo.session.SessionConst;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import static org.springframework.http.HttpStatus.OK;
 
@@ -30,7 +32,10 @@ public class LoginApiController {
      * 로그인
      */
     @PostMapping
-    public ResponseEntity<Response> doLogin(@RequestBody RequestUser user, HttpServletRequest request) {
+    public ResponseEntity<Response> doLogin(
+            @Valid @RequestBody LoginUser user,
+            HttpServletRequest request,
+            BindingResult bindingResult) {
 
         UserDto userDto = mapper.map(user, UserDto.class);
 
