@@ -1,4 +1,4 @@
-package sbs.apidemo.apiv1;
+package sbs.apidemo.api;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,14 +10,14 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ResponseV1<T> {
+public class Response<T> {
     private String error;
     private List<T> data;
 
-    public static <T> ResponseV1<T> put(T data, String error) {
+    public static <T> Response<T> put(T data, String error) {
         List<T> list = new ArrayList<>();
         list.add(data);
 
-        return new ResponseV1(null, list);
+        return new Response(null, list);
     }
 }

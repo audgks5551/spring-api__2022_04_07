@@ -1,4 +1,4 @@
-package sbs.apidemo.apiv1.vo;
+package sbs.apidemo.api.auth.vo;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;

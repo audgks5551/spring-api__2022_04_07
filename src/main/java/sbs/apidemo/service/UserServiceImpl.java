@@ -4,9 +4,15 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
-import sbs.apidemo.apiv1.dto.UserDto;
+import sbs.apidemo.api.auth.dto.UserDto;
 import sbs.apidemo.entity.UserEntity;
 import sbs.apidemo.repository.UserRepository;
+import sbs.apidemo.session.SessionConst;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -22,7 +28,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDto doJoin(UserDto userDto) {
 
-        if (userRepository.existsByEmail(userDto.getEmail())) {
+        UserEntity userEntity = mapper.map(userDto, UserEntity.class);
+
+        userEntity.setEmail(userEntity.getEmail().trim());
+
+        if (userRepository.existsByEmail(userEntity.getEmail())) {
             /**
              * TODO 중복 아이디 예외처리 필요
              */
@@ -30,13 +40,29 @@ public class UserServiceImpl implements UserService {
             return null;
         }
 
-        UserEntity userEntity = mapper.map(userDto, UserEntity.class); // UserDto -> UserEntity
+        return mapper.map(userRepository.save(userEntity), UserDto.class);
+    }
 
-        /**
-         * 중간에서 userEntity의 값을 데이터 변형 또는 임의의 값을 넣고 DB에 저장
-         */
-        userEntity.setPassword(userEntity.getPassword().trim());
+    @Override
+    public UserDto doLogin(UserDto userDto) {
 
-        return mapper.map(userRepository.save(userEntity), UserDto.class); // userEntity -> UserDto
+        UserEntity userEntity = mapper.map(userDto, UserEntity.class);
+
+        userEntity.setEmail(userEntity.getEmail().trim());
+
+        UserEntity findUser = userRepository.findByEmail(userEntity.getEmail())
+                .filter(u -> u.getPassword().equals(userEntity.getPassword()))
+                .orElse(null);
+
+
+        if (findUser == null) {
+            /**
+             * TODO 예외처리 필요
+             */
+            log.error("아이디 또는 비밀번호가 맞지 않습니다.");
+            return null;
+        }
+
+        return mapper.map(findUser, UserDto.class);
     }
 }

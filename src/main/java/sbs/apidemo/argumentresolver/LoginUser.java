@@ -1,17 +1,11 @@
-package sbs.apidemo.apiv1.vo;
-
-
-import lombok.Data;
+package sbs.apidemo.argumentresolver;
 
 import javax.validation.constraints.NotNull;
 
-@Data
-public class RequestUser {
+public class LoginUser {
+
     @NotNull(message = "Email cannot be null")
     private String email;
-
-    @NotNull(message = "Name cannot be null")
-    private String name;
 
     @NotNull(message = "password cannot be null")
     private String password;
