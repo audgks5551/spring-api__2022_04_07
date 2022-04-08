@@ -1,4 +1,4 @@
-package sbs.apidemo.post.vo;
+package sbs.apidemo.post.api.vo;
 
 import lombok.Data;
 

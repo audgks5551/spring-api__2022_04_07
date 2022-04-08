@@ -1,4 +1,4 @@
-package sbs.apidemo.post.dto;
+package sbs.apidemo.post.api.dto;
 
 import lombok.Data;
 

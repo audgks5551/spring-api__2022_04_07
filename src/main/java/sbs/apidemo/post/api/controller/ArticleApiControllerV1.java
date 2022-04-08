@@ -1,4 +1,4 @@
-package sbs.apidemo.post.api;
+package sbs.apidemo.post.api.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -7,8 +7,8 @@ import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import sbs.apidemo.post.dto.ArticleDto;
-import sbs.apidemo.post.vo.ListArticle;
+import sbs.apidemo.post.api.dto.ArticleDto;
+import sbs.apidemo.post.api.vo.ListArticle;
 import sbs.apidemo.base.argumentresolver.dto.Dto;
 
 import javax.validation.Valid;
