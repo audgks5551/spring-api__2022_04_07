@@ -7,12 +7,6 @@ import org.springframework.stereotype.Service;
 import sbs.apidemo.api.auth.dto.UserDto;
 import sbs.apidemo.entity.UserEntity;
 import sbs.apidemo.repository.UserRepository;
-import sbs.apidemo.session.SessionConst;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import java.time.LocalDateTime;
-import java.util.Optional;
 
 @Slf4j
 @Service
@@ -43,6 +37,9 @@ public class UserServiceImpl implements UserService {
         return mapper.map(userRepository.save(userEntity), UserDto.class);
     }
 
+    /**
+     * 로그인
+     */
     @Override
     public UserDto doLogin(UserDto userDto) {
 
@@ -57,7 +54,7 @@ public class UserServiceImpl implements UserService {
 
         if (findUser == null) {
             /**
-             * TODO 예외처리 필요
+             * TODO 로그인 실패 예외처리 필요
              */
             log.error("아이디 또는 비밀번호가 맞지 않습니다.");
             return null;

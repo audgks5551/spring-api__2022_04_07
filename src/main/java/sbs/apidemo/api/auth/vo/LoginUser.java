@@ -6,9 +6,7 @@ import javax.validation.constraints.NotNull;
 
 @Data
 public class LoginUser {
-    @NotNull(message = "Email cannot be null")
     private String email;
 
-    @NotNull(message = "Name cannot be null")
     private String password;
 }

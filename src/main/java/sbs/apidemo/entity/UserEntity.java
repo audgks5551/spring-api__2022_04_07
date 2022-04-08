@@ -2,6 +2,7 @@ package sbs.apidemo.entity;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -19,24 +20,15 @@ public class UserEntity extends BaseTimeEntity {
     private String id;
 
     @Column(nullable = false)
+    @Setter
     private String email;
 
     @Column(nullable = false)
+    @Setter
     private String name;
 
     @Column(nullable = false)
+    @Setter
     private String password;
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
 }
 

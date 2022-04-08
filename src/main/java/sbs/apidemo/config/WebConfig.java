@@ -4,6 +4,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import sbs.apidemo.argumentresolver.DtoArgumentResolver;
 import sbs.apidemo.argumentresolver.LoginArgumentResolver;
 import sbs.apidemo.interceptor.LoginCheckInterceptor;
 
@@ -22,6 +23,8 @@ public class WebConfig implements WebMvcConfigurer {
                 .excludePathPatterns(
                         "/api/users",
                         "/api/login",
+                        "/list",
+                        "/api/v1/article",
                         "/*.ico", "/error");
     }
 
@@ -31,5 +34,6 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
         resolvers.add(new LoginArgumentResolver());
+        resolvers.add(new DtoArgumentResolver());
     }
 }
