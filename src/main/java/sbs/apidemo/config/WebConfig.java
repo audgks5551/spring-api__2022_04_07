@@ -1,39 +1,35 @@
 package sbs.apidemo.config;
 
+import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.converter.ByteArrayHttpMessageConverter;
+import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.http.converter.StringHttpMessageConverter;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import sbs.apidemo.argumentresolver.DtoArgumentResolver;
 import sbs.apidemo.argumentresolver.LoginArgumentResolver;
-import sbs.apidemo.interceptor.LoginCheckInterceptor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Configuration
+@RequiredArgsConstructor
 public class WebConfig implements WebMvcConfigurer {
 
-    /**
-     * 화이트리스트 정하기
-     */
-    @Override
-    public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new LoginCheckInterceptor())
-                .addPathPatterns("/**")
-                .excludePathPatterns(
-                        "/api/users",
-                        "/api/login",
-                        "/list",
-                        "/api/v1/article",
-                        "/*.ico", "/error");
-    }
+    private final MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter;
+    private final StringHttpMessageConverter stringHttpMessageConverter;
+    private final ModelMapper modelMapper;
 
-    /**
-     * LoginUser 만들기
-     */
     @Override
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
+        List<HttpMessageConverter<?>> converters = new ArrayList<>();
+        converters.add(mappingJackson2HttpMessageConverter);
+        converters.add(stringHttpMessageConverter);
+
         resolvers.add(new LoginArgumentResolver());
-        resolvers.add(new DtoArgumentResolver());
+        resolvers.add(new DtoArgumentResolver(converters, modelMapper));
     }
 }

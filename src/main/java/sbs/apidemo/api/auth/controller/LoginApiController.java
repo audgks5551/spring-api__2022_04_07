@@ -10,6 +10,7 @@ import sbs.apidemo.api.Response;
 import sbs.apidemo.api.auth.dto.UserDto;
 import sbs.apidemo.api.auth.vo.LoginUser;
 import sbs.apidemo.api.auth.vo.ResponseUser;
+import sbs.apidemo.argumentresolver.Dto;
 import sbs.apidemo.service.UserService;
 import sbs.apidemo.session.SessionConst;
 
@@ -17,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.OK;
 
 @Slf4j
@@ -32,12 +34,14 @@ public class LoginApiController {
      * 로그인
      */
     @PostMapping
-    public ResponseEntity<Response> doLogin(
-            @Valid @RequestBody LoginUser user,
+    public ResponseEntity<?> doLogin(
+            @Valid @Dto(vo = LoginUser.class) UserDto userDto,
             HttpServletRequest request,
             BindingResult bindingResult) {
 
-        UserDto userDto = mapper.map(user, UserDto.class);
+        if (bindingResult.hasErrors()) {
+            return ResponseEntity.status(BAD_REQUEST).body(bindingResult.getAllErrors());
+        }
 
         UserDto loginUser = userService.doLogin(userDto);
 

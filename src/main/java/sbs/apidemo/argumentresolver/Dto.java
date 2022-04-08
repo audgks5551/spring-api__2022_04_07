@@ -8,5 +8,12 @@ import java.lang.annotation.Target;
 @Target({ElementType.PARAMETER})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Dto {
-    Class<?> dto() default Object.class;
+
+    /**
+     * 필수조건
+     * vo class 입력
+     */
+    Class<?> vo();
+
+    boolean required() default true;
 }

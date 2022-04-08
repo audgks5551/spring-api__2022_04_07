@@ -5,15 +5,19 @@ import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import sbs.apidemo.api.Response;
 import sbs.apidemo.api.auth.dto.UserDto;
 import sbs.apidemo.api.auth.vo.JoinUser;
 import sbs.apidemo.api.auth.vo.ResponseUser;
+import sbs.apidemo.argumentresolver.Dto;
 import sbs.apidemo.service.UserService;
 
 import javax.validation.Valid;
 
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.CREATED;
 
 @Slf4j
@@ -29,11 +33,13 @@ public class JoinApiController {
      * 회원가입
      */
     @PostMapping
-    public ResponseEntity<Response> doJoin(
-            @Valid @RequestBody JoinUser user,
+    public ResponseEntity<?> doJoin(
+            @Valid @Dto(vo = JoinUser.class) UserDto userDto,
             BindingResult bindingResult) {
 
-        UserDto userDto = mapper.map(user, UserDto.class);
+        if (bindingResult.hasErrors()) {
+            return ResponseEntity.status(BAD_REQUEST).body(bindingResult.getAllErrors());
+        }
 
         UserDto savedUserDto = userService.doJoin(userDto);
 
