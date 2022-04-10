@@ -10,7 +10,7 @@ import sbs.apidemo.base.api.Response;
 import sbs.apidemo.user.api.dto.UserDto;
 import sbs.apidemo.user.api.vo.LoginUser;
 import sbs.apidemo.user.api.vo.ResponseUser;
-import sbs.apidemo.base.argumentresolver.dto.Dto;
+import sbs.apidemo.base.argumentresolver.dto.VoToDto;
 import sbs.apidemo.user.service.UserService;
 import sbs.apidemo.base.session.SessionConst;
 
@@ -35,7 +35,7 @@ public class LoginApiController {
      */
     @PostMapping
     public ResponseEntity<?> doLogin(
-            @Valid @Dto(vo = LoginUser.class) UserDto userDto,
+            @Valid @VoToDto(vo = LoginUser.class) UserDto userDto,
             HttpServletRequest request,
             BindingResult bindingResult) {
 

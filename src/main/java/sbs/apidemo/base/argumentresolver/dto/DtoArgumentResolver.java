@@ -9,10 +9,12 @@ import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.support.WebDataBinderFactory;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.method.support.ModelAndViewContainer;
 import org.springframework.web.servlet.mvc.method.annotation.RequestResponseBodyMethodProcessor;
+import sbs.apidemo.base.argumentresolver.Vo.DtoToVo;
 
 import java.util.List;
 
@@ -22,7 +24,10 @@ public class DtoArgumentResolver extends RequestResponseBodyMethodProcessor {
     private ModelMapper modelMapper;
 
     @Autowired
-    public DtoArgumentResolver(List<HttpMessageConverter<?>> converters, ModelMapper modelMapper) {
+    public DtoArgumentResolver(
+            List<HttpMessageConverter<?>> converters,
+//            List<Object> requestResponseBodyAdvice,
+            ModelMapper modelMapper) {
         super(converters);
         this.modelMapper = modelMapper;
     }
@@ -32,7 +37,7 @@ public class DtoArgumentResolver extends RequestResponseBodyMethodProcessor {
      */
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
-        return parameter.hasParameterAnnotation(Dto.class);
+        return parameter.hasParameterAnnotation(VoToDto.class);
     }
 
     /**
@@ -40,8 +45,8 @@ public class DtoArgumentResolver extends RequestResponseBodyMethodProcessor {
      */
     @Override
     public boolean supportsReturnType(MethodParameter returnType) {
-        return (AnnotatedElementUtils.hasAnnotation(returnType.getContainingClass(), Dto.class) ||
-                returnType.hasMethodAnnotation(Dto.class));
+        return (AnnotatedElementUtils.hasAnnotation(returnType.getContainingClass(), DtoToVo.class) ||
+                returnType.hasMethodAnnotation(DtoToVo.class));
     }
 
     @Override
@@ -84,7 +89,7 @@ public class DtoArgumentResolver extends RequestResponseBodyMethodProcessor {
      * vo class 찾기
      */
     private Class<?> findVoClass(MethodParameter parameter) {
-        Dto dto = parameter.getParameterAnnotation(Dto.class);
+        VoToDto dto = parameter.getParameterAnnotation(VoToDto.class);
         return dto.vo();
     }
 
@@ -93,7 +98,7 @@ public class DtoArgumentResolver extends RequestResponseBodyMethodProcessor {
      */
     @Override
     protected boolean checkRequired(MethodParameter parameter) {
-        Dto dto = parameter.getParameterAnnotation(Dto.class);
+        VoToDto dto = parameter.getParameterAnnotation(VoToDto.class);
         return (dto != null && dto.required() && !parameter.isOptional());
     }
 }

@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import sbs.apidemo.post.api.dto.ArticleDto;
 import sbs.apidemo.post.api.vo.ListArticle;
-import sbs.apidemo.base.argumentresolver.dto.Dto;
+import sbs.apidemo.base.argumentresolver.dto.VoToDto;
 
 import javax.validation.Valid;
 
@@ -23,7 +23,7 @@ public class ArticleApiControllerV1 {
 
     @GetMapping
     public ResponseEntity<?> Home(
-            @Valid @Dto(vo = ListArticle.class) ArticleDto articleDto,
+            @Valid @VoToDto(vo = ListArticle.class) ArticleDto articleDto,
             BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {

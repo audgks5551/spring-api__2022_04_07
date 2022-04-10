@@ -13,7 +13,7 @@ import javax.servlet.http.HttpSession;
 public class LoginArgumentResolver implements HandlerMethodArgumentResolver {
 
     /**
-     * @login 어노테이션 있는지 확인 및 어노테이션 클래스 확인
+     * `@login` 어노테이션 있는지 확인 및 어노테이션 클래스 확인
      */
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
@@ -25,7 +25,7 @@ public class LoginArgumentResolver implements HandlerMethodArgumentResolver {
     }
 
     /**
-     * supportsParameter이 참일 때 실행
+     * supportsParameter 참일 때 실행
      * session 정보로 로그인 유저 찾기
      */
     @Override

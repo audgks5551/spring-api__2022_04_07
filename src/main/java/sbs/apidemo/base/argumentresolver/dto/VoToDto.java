@@ -7,7 +7,7 @@ import java.lang.annotation.Target;
 
 @Target({ElementType.PARAMETER})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Dto {
+public @interface VoToDto {
 
     /**
      * 필수조건
