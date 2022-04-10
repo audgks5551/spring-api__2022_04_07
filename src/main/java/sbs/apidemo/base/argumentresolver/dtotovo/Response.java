@@ -1,4 +1,4 @@
-package sbs.apidemo.base.api;
+package sbs.apidemo.base.argumentresolver.dtotovo;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

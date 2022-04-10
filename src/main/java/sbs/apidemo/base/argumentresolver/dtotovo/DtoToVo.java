@@ -1,13 +1,15 @@
-package sbs.apidemo.base.argumentresolver.dto;
+package sbs.apidemo.base.argumentresolver.dtotovo;
+
+import org.springframework.http.HttpStatus;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-@Target({ElementType.PARAMETER})
+@Target({ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface VoToDto {
+public @interface DtoToVo {
 
     /**
      * 필수조건
@@ -15,5 +17,9 @@ public @interface VoToDto {
      */
     Class<?> vo();
 
-    boolean required() default true;
+    /**
+     * 필수 조건
+     * 상태 입력
+     */
+    HttpStatus status();
 }

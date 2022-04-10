@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import sbs.apidemo.post.api.dto.ArticleDto;
 import sbs.apidemo.post.api.vo.ListArticle;
-import sbs.apidemo.base.argumentresolver.dto.VoToDto;
+import sbs.apidemo.base.argumentresolver.votodto.VoToDto;
 
 import javax.validation.Valid;
 

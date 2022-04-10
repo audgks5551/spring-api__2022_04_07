@@ -1,15 +1,13 @@
-package sbs.apidemo.base.argumentresolver.Vo;
+package sbs.apidemo.base.argumentresolver.votodto;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import static java.lang.annotation.ElementType.ANNOTATION_TYPE;
-
-
+@Target({ElementType.PARAMETER})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface DtoToVo {
+public @interface VoToDto {
 
     /**
      * 필수조건

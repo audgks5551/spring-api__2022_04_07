@@ -1,34 +1,53 @@
-package sbs.apidemo.base.argumentresolver.dto;
+package sbs.apidemo.base.argumentresolver.votodto;
 
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.MethodParameter;
-import org.springframework.core.annotation.AnnotatedElementUtils;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.support.WebDataBinderFactory;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.method.support.ModelAndViewContainer;
 import org.springframework.web.servlet.mvc.method.annotation.RequestResponseBodyMethodProcessor;
-import sbs.apidemo.base.argumentresolver.Vo.DtoToVo;
 
 import java.util.List;
 
+/**
+ * 1. ModelMapper에 의존중이므로 ModelMapper를 빈으로 설정
+ * @Bean
+ *     public ModelMapper modelMapper(){
+ *         ModelMapper mapper = new ModelMapper();
+ *         mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
+ *         return mapper;
+ *     }
+ *
+ * 2. @Autowired 사용
+ *  package org.springframework.beans.factory.annotation
+ *
+ * 3. DtoToVo annotation 사용중
+ * @Target({ElementType.PARAMETER})
+ * @Retention(RetentionPolicy.RUNTIME)
+ * public @interface VoToDto {
+ *
+ *  Class<?> vo();
+ *  boolean required() default true;
+ * }
+ *
+ * 4. RequestResponseBodyMethodProcessor 상속받음
+ *  package org.springframework.web.servlet.mvc.method.annotation
+ */
+
 @Slf4j
-public class DtoArgumentResolver extends RequestResponseBodyMethodProcessor {
+public class VoToDtoArgumentResolver extends RequestResponseBodyMethodProcessor {
 
     private ModelMapper modelMapper;
 
     @Autowired
-    public DtoArgumentResolver(
-            List<HttpMessageConverter<?>> converters,
-//            List<Object> requestResponseBodyAdvice,
-            ModelMapper modelMapper) {
-        super(converters);
+    public VoToDtoArgumentResolver(List<HttpMessageConverter<?>> converters, List<Object> requestResponseBodyAdvice, ModelMapper modelMapper) {
+        super(converters, requestResponseBodyAdvice);
         this.modelMapper = modelMapper;
     }
 
@@ -41,12 +60,12 @@ public class DtoArgumentResolver extends RequestResponseBodyMethodProcessor {
     }
 
     /**
-     * 아직은 필요없음
+     * returnType은 사용하지 않음
+     * false 설정
      */
     @Override
     public boolean supportsReturnType(MethodParameter returnType) {
-        return (AnnotatedElementUtils.hasAnnotation(returnType.getContainingClass(), DtoToVo.class) ||
-                returnType.hasMethodAnnotation(DtoToVo.class));
+        return false;
     }
 
     @Override
@@ -80,7 +99,16 @@ public class DtoArgumentResolver extends RequestResponseBodyMethodProcessor {
         /**
          * vo -> dto
          */
-        Object dto = modelMapper.map(vo, parameter.getNestedGenericParameterType());
+        Object dto = null;
+        try {
+           dto = modelMapper.map(vo, parameter.getNestedGenericParameterType());
+        } catch (Exception e) {
+            log.error("modelMapper null");
+            /**
+             * TODO 예외처리 필요
+             */
+            return adaptArgumentIfNecessary(null, parameter);
+        }
 
         return adaptArgumentIfNecessary(dto, parameter);
     }

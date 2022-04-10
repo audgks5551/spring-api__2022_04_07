@@ -6,11 +6,11 @@ import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import sbs.apidemo.base.api.Response;
+import sbs.apidemo.base.argumentresolver.dtotovo.Response;
 import sbs.apidemo.user.api.dto.UserDto;
 import sbs.apidemo.user.api.vo.LoginUser;
 import sbs.apidemo.user.api.vo.ResponseUser;
-import sbs.apidemo.base.argumentresolver.dto.VoToDto;
+import sbs.apidemo.base.argumentresolver.votodto.VoToDto;
 import sbs.apidemo.user.service.UserService;
 import sbs.apidemo.base.session.SessionConst;
 
