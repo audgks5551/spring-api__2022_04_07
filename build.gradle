@@ -28,12 +28,12 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
 	/**
-	 * modelMapper
+	 * ModelMapper
 	 */
 	implementation 'org.modelmapper:modelmapper:3.1.0'
 
 	/**
-	 * queryDSL
+	 * QueryDSL
 	 */
 	implementation 'com.querydsl:querydsl-jpa'
 	annotationProcessor "com.querydsl:querydsl-apt:5.0.0:jpa"
@@ -41,9 +41,16 @@ dependencies {
 	annotationProcessor "jakarta.annotation:jakarta.annotation-api"
 
 	/**
-	 * validation
+	 * Validation
 	 */
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+	/**
+	 * Swagger
+	 */
+	implementation 'io.springfox:springfox-boot-starter:3.0.0'
+	implementation 'io.springfox:springfox-swagger-ui:3.0.0'
+
 }
 
 tasks.named('test') {

@@ -8,6 +8,9 @@ server:
       force: true
 
 spring:
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
     url: jdbc:mariadb://127.0.0.1:3306/apidemo?useUnicode=true&characterEncoding=utf8&autoReconnect=true&serverTimezone=Asia/Seoul&useOldAliasMetadataBehavior=true&zeroDateTimeNehavior=convertToNull&allowPublicKeyRetrieval=true
@@ -29,3 +32,5 @@ logging.level.root: info
 
 # hello.springmvc 패키지와 그 하위 로그 레벨 설정
 logging.level.sbs.apidemo: debug
+
+

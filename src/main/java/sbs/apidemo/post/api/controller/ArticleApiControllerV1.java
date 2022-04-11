@@ -22,25 +22,23 @@ import static org.springframework.http.HttpStatus.OK;
 public class ArticleApiControllerV1 {
 
     @GetMapping
-    public ResponseEntity<?> Home(
-            @Valid @VoToDto(vo = ListArticle.class) ArticleDto articleDto,
-            BindingResult bindingResult) {
+    public ResponseEntity<?> Home() {
 
-        if (bindingResult.hasErrors()) {
-
-            /**
-             * error code와 message 확인
-             */
-            for (Object object : bindingResult.getAllErrors()) {
-                if(object instanceof ObjectError) {
-                    ObjectError objectError = (ObjectError) object;
-                    System.out.println(objectError.getCode());
-                    System.out.println(objectError.getDefaultMessage());
-                }
-            }
-
-            return ResponseEntity.status(BAD_REQUEST).body(bindingResult.getAllErrors());
-        }
+//        if (bindingResult.hasErrors()) {
+//
+//            /**
+//             * error code와 message 확인
+//             */
+//            for (Object object : bindingResult.getAllErrors()) {
+//                if(object instanceof ObjectError) {
+//                    ObjectError objectError = (ObjectError) object;
+//                    System.out.println(objectError.getCode());
+//                    System.out.println(objectError.getDefaultMessage());
+//                }
+//            }
+//
+//            return ResponseEntity.status(BAD_REQUEST).body(bindingResult.getAllErrors());
+//        }
 
         return ResponseEntity.status(OK).body("ok");
     }

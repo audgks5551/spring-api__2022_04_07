@@ -1,5 +1,6 @@
 package sbs.apidemo.user.api.controller;
 
+import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
