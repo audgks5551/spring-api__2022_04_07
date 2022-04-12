@@ -44,7 +44,6 @@ public class LoginApiController {
         }
 
         UserDto loginUser = userService.doLogin(userDto);
-
         HttpSession session = request.getSession();
         session.setAttribute(SessionConst.LOGIN_MEMBER, loginUser);
 
