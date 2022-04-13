@@ -1,10 +1,12 @@
 package sbs.apidemo.base.config;
 
+import com.fasterxml.classmate.TypeResolver;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
+import sbs.apidemo.base.swagger.ChangeModel;
 
 @Configuration
 public class AppConfig {

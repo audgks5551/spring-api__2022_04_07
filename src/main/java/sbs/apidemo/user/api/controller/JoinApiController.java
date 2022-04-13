@@ -1,5 +1,6 @@
 package sbs.apidemo.user.api.controller;
 
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -34,10 +35,11 @@ public class JoinApiController {
     /**
      * 회원가입
      */
+    @ApiOperation(value = "고객 아이디를 통한 고객 조회", notes = "고객 아이디로 고객 정보를 조회합니다.\n삭제된 고객은 조회에서 제외됩니다.")
     @PostMapping
     @DtoToVo(vo = ResponseUser.class, status = CREATED)
     public UserDto doJoin(
-            @Valid @VoToDto(vo = JoinUser.class) UserDto userDto,
+            @VoToDto(vo = JoinUser.class) @Valid UserDto userDto,
             BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
